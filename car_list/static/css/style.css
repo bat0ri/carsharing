@@ -1,0 +1,26 @@
+#main-section {
+  background-image: url('/static/img/main-page-section-bckgrnd.jpg');
+  /* остальные стили для секции */
+}
+#company {
+    background-color: black;
+    height: 60px
+}
+
+#boxter {
+    background-image: url('/static/img/boxter.jpg');
+}
+
+.car_btn:hover {
+       background-image: url('/static/img/niva.jpg');
+}
+.moto-btn:hover {
+       background-image: url('/static/img/moto.jpg');
+}
+.velo-btn:hover {
+       background-image: url('/static/img/velo.jpg');
+}
+
+.kater-btn:hover {
+       background-image: url('/static/img/kater.jpg');
+}

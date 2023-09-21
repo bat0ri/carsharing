@@ -1,0 +1,82 @@
+{% extends 'car_list/base.html' %}
+
+
+{% block content %}
+<section class=" dark:bg-gray-900 bg-cover bg-center h-screen flex flex-col mt-32" >
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                  Добавить транспорт
+              </h1>
+              {% if form.errors %}
+                <p> {{ form.errors.error }}</p>
+              {% endif %}
+
+              <form action="{% url 'add' %}" class="space-y-4 md:space-y-6" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="type" class="block text-gray-700 font-bold mb-2">Тип:</label>
+                <input type="text" name="type" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required></input>
+              </div>
+              <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-bold mb-2">Название:</label>
+                <input type="text" name="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="mb-4">
+                <label for="description" class="block text-gray-700 font-bold mb-2">Описание:</label>
+                <textarea name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required></textarea>
+              </div>
+              <div class="mb-4">
+                <label for="price" class="block text-gray-700 font-bold mb-2">Цена:</label>
+                <input type="number" name="price" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" step="0.01" required>
+              </div>
+              <div class="mb-4">
+                <label for="capacity" class="block text-gray-700 font-bold mb-2">Вместительность:</label>
+                <input type="number" name="capacity" id="capacity"class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="mb-4">
+                <label for="image" class="block text-gray-700 font-bold mb-2">Изображение:</label>
+                <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="mb-4">
+                <label for="departure_time" class="block text-gray-700 font-bold mb-2">Время отправления:</label>
+                <input type="datetime-local" name="departure_time" id="departure_time" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="mb-4">
+                <label for="arrival_time" class="block text-gray-700 font-bold mb-2">Время прибытия:</label>
+                <input type="datetime-local" name="arrival_time" id="arrival_time" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="mb-4">
+                <label for="arenda" class="block text-gray-700 font-bold mb-2">Аренда:</label>
+                <input type="text" name="arenda" id="arenda" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700
+                                        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
+                                        dark:focus:border-blue-500" required>
+              </div>
+              <div class="flex justify-end">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Создать</button>
+              </div>
+            </form>
+          </div>
+      </div>
+  </div>
+</section>
+
+
+{% endblock %}

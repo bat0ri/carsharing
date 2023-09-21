@@ -1,0 +1,67 @@
+{% extends 'car_list/base.html' %}
+
+
+{% block content %}
+<section class="bg-cover bg-center h-screen flex items-center" id="main-section">
+  <div class="container mx-auto text-center">
+    <h1 class="text-4xl font-bold text-white mb-4">Аренда автомобилей в Казани</h1>
+    <p class="text-lg text-white mb-8">Лучший сервис аренды автомобилей в Республике Татарстан</p>
+    <button onclick="scrollToTransport()" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Забронировать</a>
+  </div>
+</section>
+<section class="bg-black py-20 h-screen flex" id="transport">
+  <div class="container mx-auto flex flex-col justify-center items-center">
+    <div class="w-1/2 pr-10">
+      <h2 class="text-4xl font-bold text-white mb-10">Выберите вид транспорта</h2>
+    </div>
+    <div class="w-full flex flex-col justify-between">
+      <a href="{% url 'offers' transport_type='auto' %}" class="car_btn bg-gray-900 text-white text-left text-xl font-bold py-20 px-10 rounded-lg mb-8 w-full">Автомобили</a>
+      <a href="{% url 'offers' transport_type='moto' %}" class="moto-btn bg-gray-900 text-white text-left text-xl font-bold py-20 px-10 rounded-lg mb-8 w-full">Мото</a>
+      <a href="{% url 'offers' transport_type='velo' %}" class="velo-btn bg-gray-900 text-white text-left text-xl font-bold py-20 px-10 rounded-lg mb-8 w-full">Вело</a>
+      <a href="{% url 'offers' transport_type='kater' %}" class="kater-btn bg-gray-900 text-white text-left text-xl font-bold py-20 px-10 rounded-lg mb-8 w-full">Катера</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="bg-white py-20 h-3/4" id="boxter">
+  <div class="container mx-auto">
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-1/2">
+        <h1 class="text-6xl font-bold mb-10 text-black text-shadow-lg">Каршеринг РТ</h1>
+        <p class="text-2xl mb-4 w-full text-gray-700"> - это современный и надежный сервис автомобильной аренды в Казани. Мы предоставляем услуги аренды автомобилей высокого качества по доступным ценам.</p>
+        <p class="text-2xl mb-4 w-full text-gray-700"> Наша миссия - облегчить жизнь горожанам и туристам, предоставляя им возможность свободного передвижения в городе без необходимости покупать свой автомобиль. Мы стремимся сделать процесс аренды максимально простым и удобным для наших клиентов, а также гарантировать безопасность и комфорт во время поездки.</p>
+        <p class="text-2xl mb-4 w-full text-gray-700">Наши автомобили всегда находятся в отличном техническом состоянии и проходят регулярные проверки перед каждой арендой</p>
+      </div>
+      <div class="w-full md:w-1/2">
+        <div class="flex flex-wrap">
+          <div class="w-1/2 text-center">
+            <h2 class="text-3xl font-bold text-black mb-3">Количество ТС</h2>
+            <p class="text-gray-700 text-xl">100</p>
+          </div>
+          <div class="w-1/2 text-center">
+            <h2 class="text-3xl font-bold text-black mb-3">Год основания</h2>
+            <p class="text-gray-700 text-xl">2015</p>
+          </div>
+          <div class="w-1/2 text-center">
+            <h2 class="text-3xl font-bold text-black mb-3">Частота тех. осмотра</h2>
+            <p class="text-gray-700 text-xl">Раз в 3 месяца</p>
+          </div>
+          <div class="w-1/2 text-center">
+            <h2 class="text-3xl font-bold text-black mb-3">Средняя цена</h2>
+            <p class="text-gray-700 text-xl">от 700 руб/час</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function scrollToTransport() {
+  const transportSection = document.getElementById('transport'); // получаем элемент секции с транспортом
+  transportSection.scrollIntoView({behavior: 'smooth'}); // прокручиваем до этой секции с плавной анимацией
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'car_list/base.html' %}
+
+
+{% block content %}
+
+<div class="container mx-auto py-10">
+
+  <div class="flex items-center  w-1/4 m-4 hidden sm:flex sm:items-center">
+    <button type="button" onclick="showDays()" class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Посуточно
+      <span id="dayCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+    <button type="button" onclick="showHour()" class="inline-flex items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Почасово
+      <span id="hourCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+    <button type="button" onclick="showAll()"class="inline-flex items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Все
+      <span id="allCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+  </div>
+  <div class="flex flex-col block sm:hidden bg-white border-t-2 py-2">
+    <button type="button" onclick="showDays()" class="m-2 inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Посуточно
+      <span id="dayCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+    <button type="button" onclick="showHour()" class="inline-flex m-2 items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Почасово
+      <span id="hourCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+    <button type="button" onclick="showAll()"class="inline-flex m-2 items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Все
+      <span id="allCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
+      </span>
+    </button>
+  </div>
+
+  <div class="w-full justify-items-center">
+    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      {% for transport in offers %}
+      {% if transport.is_booked %}
+          <li class="bg-gray-300 rounded-lg shadow-lg overflow-hidden" id="{{ transport.arenda }}">
+               <img class="h-48 w-full object-cover " src="{{ transport.image.url }}" alt="{{ transport.title }}">
+              <div class="p-4">
+                  <h4 class="font-bold text-xl mb-2">{{ transport.name }}</h4>
+                <h3 class="font-bold text-xl mb-2">{{ transport.title }}</h3>
+                <p class="text-gray-700 text-base">{{ transport.description }}</p>
+                <p>Забронировано</p>
+              </div>
+            </li>
+        {% else %}
+            <li class="bg-white rounded-lg shadow-lg overflow-hidden" id="{{ transport.arenda }}">
+           <img class="h-48 w-full object-cover " src="{{ transport.image.url }}" alt="{{ transport.title }}">
+          <div class="p-4">
+              <h4 class="font-bold text-xl mb-2">{{ transport.name }}</h4>
+            <h3 class="font-bold text-xl mb-2">{{ transport.title }}</h3>
+            <p class="text-gray-700 text-base">{{ transport.description }}</p>
+            <div class="flex items-center justify-between mt-4">
+              <p class="font-bold text-xl">{{ transport.price }} ₽/час</p>
+              {% if is_moderator %}
+                  <form action="{% url 'delete' offer_id=transport.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="transport_type" value="{{ transport_type }}">
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">X</button>
+                  </form>
+                {% endif %}
+              <a href="{% url 'offer' offer_id=transport.id %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Бронь</a>
+            </div>
+          </div>
+        </li>
+        {% endif %}
+      {% empty %}
+        <p>Нет доступного транспорта</p>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+</div>
+<script>
+  function countAutoElements() {
+  var dayCount = document.querySelectorAll('#day');
+  document.getElementById('dayCount').innerHTML = dayCount.length;;
+
+  var hourCount = document.querySelectorAll('#hour');
+  document.getElementById('hourCount').innerHTML = hourCount.length;;
+
+  document.getElementById('allCount').innerHTML = hourCount.length + dayCount.length;;
+
+}
+countAutoElements();
+
+function showHour() {
+  var allCountElements = document.querySelectorAll('#day');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.add('hidden');
+  }
+  var allCountElements = document.querySelectorAll('#hour');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.remove('hidden');
+  }
+}
+
+function showDays() {
+  var allCountElements = document.querySelectorAll('#hour');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.add('hidden');
+  }
+  var allCountElements = document.querySelectorAll('#day');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.remove('hidden');
+  }
+}
+
+function showAll() {
+  var allCountElements = document.querySelectorAll('#day');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.remove('hidden');
+  }
+  var allCountElements = document.querySelectorAll('#hour');
+  for (var i = 0; i < allCountElements.length; i++) {
+    allCountElements[i].classList.remove('hidden');
+  }
+}
+
+
+</script>
+{% endblock %}
+
+
