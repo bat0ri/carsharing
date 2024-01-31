@@ -4,41 +4,17 @@
 {% block content %}
 
 <div class="container mx-auto py-10">
-
+    
+    <!------------------------   список категорий   -------------------------->
     <div class="flex items-center  w-1/4 m-4 hidden sm:flex sm:items-center">
-    <button type="button" onclick="showDays()" class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Посуточно
-        <span id="dayCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
-    <button type="button" onclick="showHour()" class="inline-flex items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Почасово
-        <span id="hourCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
-    <button type="button" onclick="showAll()"class="inline-flex items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Все
-        <span id="allCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
+        {% for category in categories %}
+            <a class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+
     </div>
-    <div class="flex flex-col block sm:hidden bg-white border-t-2 py-2">
-    <button type="button" onclick="showDays()" class="m-2 inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Посуточно
-        <span id="dayCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
-    <button type="button" onclick="showHour()" class="inline-flex m-2 items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Почасово
-        <span id="hourCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
-    <button type="button" onclick="showAll()"class="inline-flex m-2 items-center mx-1 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Все
-        <span id="allCount" class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">
-        </span>
-    </button>
-    </div>
+
 
 
     <!------------------------   список авто   -------------------------->
@@ -46,18 +22,20 @@
 
     <div class="w-full justify-items-center">
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
+            {% for car in transports %}
             <li class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img class="h-48 w-full object-cover " src="">
+                <img class="h-48 w-full object-cover " src="{{ car.image.url }}">
                 <div class="p-4">
-                    <h4 class="font-bold text-xl mb-2">авто</h>
-                    <h3 class="font-bold text-xl mb-2">мерс слс</h3>
-                    <p class="text-gray-700 text-base">Едет</p>
+                    <h4 class="font-bold text-xl mb-2">{{ car.name }}</h>
+                    <h3 class="font-bold text-xl mb-2">{{ car.description }}</h3>
+                    <p class="text-gray-700 text-base">{{ car.is_ready }}</p>
                     <div class="flex items-center justify-between mt-4">
-                        <p class="font-bold text-xl">1000 ₽/час</p>
+                        <p class="font-bold text-xl">{{ car.price }} ₽/час</p>
                         <a href="" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Бронь</a>
                     </div>
                 </div>
             </li>
+            {% endfor %}
         </ul>
     </div>
 

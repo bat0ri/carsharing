@@ -1,0 +1,1 @@
+[{"model": "catalog.transport", "pk": 1, "fields": {"name": "Лада", "description": "Веста", "price": "1000.00", "is_ready": true, "image": "transport_images/gradient.jpg", "category": 1}}, {"model": "catalog.transport", "pk": 2, "fields": {"name": "ЮБР 125", "description": "", "price": "2500.00", "is_ready": true, "image": "transport_images/moto.jpg", "category": 2}}]
