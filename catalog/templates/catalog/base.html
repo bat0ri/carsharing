@@ -20,14 +20,9 @@
     <div class="container mx-auto px-4">
       <div class="flex items-center justify-between py-2">
         <div>
-          <a href="{% url 'main' %}" class="text-3xl font-bold text-black text-shadow-lg">Каршеринг РТ</a>
+          <a href="{% url 'home' %}" class="text-3xl font-bold text-black text-shadow-lg">Каршеринг РТ</a>
         </div>
-        <div class="hidden sm:flex sm:items-center">
-            <a href="{% url 'offers' transport_type='auto' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Автомобили</a>
-            <a href="{% url 'offers' transport_type='moto' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Мотоциклы</a>
-            <a href="{% url 'offers' transport_type='velo' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Велосипеды и самокаты</a>
-            <a href="{% url 'offers' transport_type='kater' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Катера</a>
-        </div>
+
 
         <div class="hidden sm:flex sm:items-center">
           {% if user.is_authenticated %}
@@ -57,12 +52,7 @@
       </div>
 
       <div class="block sm:hidden bg-white border-t-2 py-2">
-        <div class="flex flex-col">
-            <a href="{% url 'offers' transport_type='auto' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Автомобили</a>
-            <a href="{% url 'offers' transport_type='moto' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Мотоциклы</a>
-            <a href="{% url 'offers' transport_type='velo' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Велосипеды и самокаты</a>
-            <a href="{% url 'offers' transport_type='kater' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Катера</a>
-          <div class="flex justify-between items-center border-t-2 pt-2">
+
               {% if user.is_authenticated %}
                 {% if is_moderator %}
                     <a href="{% url 'add' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> Добавить </a>

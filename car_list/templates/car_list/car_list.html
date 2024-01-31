@@ -41,7 +41,9 @@
   </div>
 
   <div class="w-full justify-items-center">
-    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="carousel-container">
+    <div class="carousel-viewport">
+    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
       {% for transport in offers %}
       {% if transport.is_booked %}
           <li class="bg-gray-300 rounded-lg shadow-lg overflow-hidden" id="{{ transport.arenda }}">
@@ -78,6 +80,8 @@
         <p>Нет доступного транспорта</p>
       {% endfor %}
     </ul>
+    </div>
+    </div>
   </div>
 </div>
 </div>
@@ -129,6 +133,8 @@ function showAll() {
 
 
 </script>
+{% load static %}
+<script src="{% static 'js/carousel.js' %}"></script>
 {% endblock %}
 
 
