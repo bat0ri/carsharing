@@ -1,0 +1,1 @@
+[{"model": "catalog.transportcategory", "pk": 1, "fields": {"name": "Легковой автомобиль", "description": ""}}, {"model": "catalog.transportcategory", "pk": 2, "fields": {"name": "Мотоциклы", "description": ""}}]
