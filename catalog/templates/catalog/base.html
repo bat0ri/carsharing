@@ -39,8 +39,8 @@
               <h1 class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> {{ user }}</h1>
               <a href="" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Выйти</a>
           {% else %}
-              <a href="" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
-              <a href="" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
+              <a href="{% url 'users:login'  %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
+              <a href="{% url 'users:registration'  %}" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>
           {% endif %}
         </div>
 
