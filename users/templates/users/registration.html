@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %} {% endblock %}</title>
+  <title>{% block title %} {{ title }} {% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
@@ -20,27 +20,34 @@
               <h1 class="text-xl font-bold leading-tight tracking-tight md:text-2xl text-white">
                   Registration
               </h1>
-              {% if form.errors %}
-                <p>{{ form.errors.error }}</p>
-              {% endif %}
-              <form class="space-y-4 md:space-y-6 flex flex-col" method="post" action="">
-                  {% csrf_token %}
-                  <div>
-                      <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
+            <form action="{% url 'users:registration' %}" method="post" class="space-y-4 md:space-y-6"">
+
+                {% csrf_token %}
+
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        {{ form.email }}
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                         {{ form.username }}
-                  </div>
-                  <div>
+                    </div>
+
+                    <div>
                         <label for='password1' class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         {{ form.password1 }}
-                  </div>
-                  <div>
+                    </div>
+
+                    <div>
                         <label for='password2' class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pls, repeat password!</label>
                         {{ form.password2 }}
-                  </div>
-                  <button type="submit" class="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Reg me!</button>
-                  <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Have you an account? <a href="{% url 'login' %}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a>
-                  </p>
+                    </div>
+                    
+                    <button type="submit" class="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Reg me!</button>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Have you an account? <a href="{% url 'users:login' %}" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign in</a>
+                    </p>
               </form>
           </div>
       </div>
