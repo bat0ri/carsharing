@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -142,6 +143,6 @@ SESSION_COOKIE_AGE = 1800  # Время жизни сессии в секунд�
 SESSION_SAVE_EVERY_REQUEST = True  # Сохранять сессию после каждого запроса
 
 
-
+AUTH_USER_MODEL = 'users.User'
 
 
