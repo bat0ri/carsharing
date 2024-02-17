@@ -11,7 +11,6 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
-
 </head>
 <body>
 
@@ -26,9 +25,7 @@
 
         <div class="hidden sm:flex sm:items-center">
           {% if user.is_authenticated %}
-            {% if is_moderator %}
-                <a href="{% url 'add' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> Добавить </a>
-            {% endif %}
+
               <div style="display: flex; flex-direction: row; margin-right: 10px">
                   <a href="" class="flex items-center justify-center p-2 rounded-full bg-gray-200 hover:bg-gray-300">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -37,7 +34,7 @@
                     </a>
               </div>
               <h1 class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> {{ user }}</h1>
-              <a href="" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Выйти</a>
+              <a href="{% url 'users:logout' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Выйти</a>
           {% else %}
               <a href="" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
               <a href="" class="text-gray-800 text-sm font-semibold border px-4 py-2 rounded-lg hover:text-purple-600 hover:border-purple-600">Sign up</a>

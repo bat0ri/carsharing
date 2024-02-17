@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import User
 
 
 class TransportCategory(models.Model):
@@ -23,3 +23,24 @@ class Transport(models.Model):
 
     def __str__(self):
         return f"Транспорт: {self.name} ||--|| Тип: {self.category.name}"
+
+
+
+class Busket(models.Model):
+
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    transport = models.ForeignKey(to=Transport, on_delete=models.CASCADE)
+    minutes = models.PositiveSmallIntegerField(default=0)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+    
+
+    class Meta:
+        verbose_name = ("Busket")
+        verbose_name_plural = ("Buskets")
+
+    def __str__(self):
+        return f'Корзина для {self.user.email}, Продукт: {self.transport.name}'
+
+    def get_absolute_url(self):
+        return reverse("Busket_detail", kwargs={"pk": self.pk})
