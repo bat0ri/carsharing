@@ -1,3 +1,25 @@
-<div class="max-w-2xl mx-auto my-8 p-6 bg-pink-200 rounded-md shadow-md w-1/2 h-screen ">
+<div class="font-bold text-xl mb-2 max-w-2xl mx-auto my-8 p-6 rounded-md shadow-lg w-1/2 h-screen ">
     Корзина
+    {% if buskets %}
+        <h2 class="text-lg text-stone-800/70 mb-2">{{ buskets.total_sum }}</h2>
+        {% for car in buskets  %}
+        <li class="bg-white rounded-lg shadow-lg my-1">
+            <div class="flex flex-row">
+                <img class="h-36 w-36 object-cover m-2 rounded-md" src="{{ car.transport.image.url }}">
+                <div class="p-2 m-2">
+                    <h4 class="font-bold text-xl mb-2">{{ car.transport.name }}</h>
+                    <h3 class="text-sm mb-2">{{ car.transport.description }}</h3>
+                    <div class="flex items-center justify-between mt-4 ">
+                        <p class="text-sm text-stone-800/70 mr-5">Подписка: {{ car.minutes }} минут {{  car.sum  }} рублей</p>
+                        <a href="{% url 'catalog:busket_add' car.transport.id %}" class="bg-green-500 mx-1 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Добавить</a>
+                        <a href="{% url 'catalog:busket_remove' car.id %}" class="bg-red-500 hover:bg-red-700 mx-1  text-white font-bold py-2 px-4 rounded">Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+        
+    {% else %}
+        <p>Добавьте товары, ваша корзина пуста</p>
+    {% endif %}
 </div>

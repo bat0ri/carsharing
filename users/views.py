@@ -4,6 +4,7 @@ from django.urls  import reverse
 from users.forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib import auth
 from users.models import User
+from catalog.models import Busket
 
 
 # Create your views here.
@@ -60,6 +61,7 @@ def profile(request):
     context = {
         "form": form,
         "title": "Профиль",
+        "buskets": Busket.objects.filter(user=request.user)
     }
 
     return render(request, 'users/profile.html', context)
