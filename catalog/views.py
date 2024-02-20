@@ -1,12 +1,13 @@
 from django.shortcuts import render, HttpResponseRedirect
 from catalog.models import Transport, TransportCategory, Busket
+from django.views.generic.base import TemplateView
 
 
-def index(request):
-    context = {
-        'title': 'Home'
-    }
-    return render(request, 'catalog/index.html', context)
+
+class IndexView(TemplateView):
+    title = 'Home'
+    template_name = 'catalog/index.html'
+
 
 
 def catalog(request):
