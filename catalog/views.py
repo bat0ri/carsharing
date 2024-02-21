@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from catalog.models import Transport, TransportCategory, Busket
 from django.views.generic.base import TemplateView
-
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(TemplateView):
@@ -14,15 +14,18 @@ class IndexView(TemplateView):
     
 
 
-def catalog(request):
+def catalog(request, category_id=None):
+    transports = Transport.objects.filter(category__id=category_id) if category_id else Transport.objects.all()
     context = {
         'title': 'Каталог',
-        'transports': Transport.objects.all(),
+        'transports': transports,
         'categories': TransportCategory.objects.all()
     }
     
     return render(request, 'catalog/catalog.html', context)
 
+
+@login_required()
 def busket_add(request, transport_id):
     transport = Transport.objects.get(id=transport_id)
     buskets = Busket.objects.filter(user=request.user, transport=transport)
@@ -36,6 +39,8 @@ def busket_add(request, transport_id):
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
+
+@login_required
 def busket_remove(request, busket_id):
     busket = Busket.objects.get(id=busket_id)
     busket.delete()

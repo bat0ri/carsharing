@@ -145,4 +145,4 @@ SESSION_SAVE_EVERY_REQUEST = True  # Сохранять сессию после 
 
 AUTH_USER_MODEL = 'users.User'
 
-
+LOGIN_URL = '/users/login/'
