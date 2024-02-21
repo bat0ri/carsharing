@@ -4,19 +4,17 @@ from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
+from common.views import CommonTitleMixin
 
-class IndexView(TemplateView):
+class IndexView(CommonTitleMixin, TemplateView):
     template_name = 'catalog/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'Home' 
-        return context
+    title = 'Home'
 
 
-class CatalogView(ListView):
+class CatalogView(CommonTitleMixin, ListView):
     model = Transport
     template_name = 'catalog/catalog.html'
+    title = 'Каталог'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -25,20 +23,8 @@ class CatalogView(ListView):
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'Каталог' 
         context['categories'] = TransportCategory.objects.all()
         return context
-
-
-#def catalog(request, category_id=None):
-#    transports = Transport.objects.filter(category__id=category_id) if category_id else Transport.objects.all()
-#    context = {
-#        'title': 'Каталог',
-#        'transports': transports,
-#        'categories': TransportCategory.objects.all()
-#    }
-    
-#    return render(request, 'catalog/catalog.html', context)
 
 
 @login_required()
