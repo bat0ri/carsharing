@@ -25,7 +25,7 @@
 
     <div class="w-full justify-items-center">
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
-            {% for car in transports %}
+            {% for car in object_list %}
             <li class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img class="h-48 w-full object-cover " src="{{ car.image.url }}">
                 <div class="p-4">

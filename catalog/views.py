@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from catalog.models import Transport, TransportCategory, Busket
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 
 
@@ -11,18 +12,33 @@ class IndexView(TemplateView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Home' 
         return context
-    
 
 
-def catalog(request, category_id=None):
-    transports = Transport.objects.filter(category__id=category_id) if category_id else Transport.objects.all()
-    context = {
-        'title': 'Каталог',
-        'transports': transports,
-        'categories': TransportCategory.objects.all()
-    }
+class CatalogView(ListView):
+    model = Transport
+    template_name = 'catalog/catalog.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category__id=category_id) if category_id else queryset
+
+    def get_context_data(self, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Каталог' 
+        context['categories'] = TransportCategory.objects.all()
+        return context
+
+
+#def catalog(request, category_id=None):
+#    transports = Transport.objects.filter(category__id=category_id) if category_id else Transport.objects.all()
+#    context = {
+#        'title': 'Каталог',
+#        'transports': transports,
+#        'categories': TransportCategory.objects.all()
+#    }
     
-    return render(request, 'catalog/catalog.html', context)
+#    return render(request, 'catalog/catalog.html', context)
 
 
 @login_required()
