@@ -3,7 +3,7 @@ from catalog.models import Transport, TransportCategory, Busket
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic.edit import CreateView
 
 class IndexView(TemplateView):
     template_name = 'catalog/index.html'
