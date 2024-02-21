@@ -1,70 +1,42 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.urls  import reverse
+from django.urls  import reverse, reverse_lazy
 
 from users.forms import LoginForm, RegisterForm, UserProfileForm
 from django.contrib import auth
 from users.models import User
+from catalog.models import Busket
+from django.contrib.auth.views import LoginView
+from common.views import CommonTitleMixin
+
+from django.views.generic.edit import CreateView, UpdateView
 
 
-# Create your views here.
-def login(request):
-
-    if request.method =='POST':
-        form = LoginForm(data=request.POST)
-        if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            user = auth.authenticate(username=username, password=password)
-            if user:
-                auth.login(request, user)
-                return HttpResponseRedirect(reverse('catalog:index'))
-    else:
-        form = LoginForm()
-
-    context = {
-        'title': 'Вход',
-        'form': form,
-    }
-    return render(request, 'users/login.html', context)
+class UserLoginForm(CommonTitleMixin, LoginView):
+    template_name = 'users/login.html'
+    form_class = LoginForm
+    success_url = reverse_lazy('catalog:index')
+    title = 'Вход'
 
 
-def registration(request):
 
-    form = RegisterForm()
-    
-    if request.method =='POST':
-        form = RegisterForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('users:login'))
-        else:
-            print(form.errors)
-    
-    context = {
-        "title": "Регистрация",
-        "form": form
-    }
-    return render(request, 'users/registration.html', context)
+class UserRegistrationView(CommonTitleMixin, CreateView):
+    model = User
+    template_name = 'users/registration.html'
+    form_class = RegisterForm
+    success_url = reverse_lazy('users:login')
+    title = 'Регистрация'
 
 
-def profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('users:profile'))
-        else:
-            print(form.errors)
-    else:        
-        form = UserProfileForm(instance=request.user)
-    context = {
-        "form": form,
-        "title": "Профиль",
-    }
+class UserProfileView(CommonTitleMixin, UpdateView):
+    model = User
+    form_class = UserProfileForm
+    template_name = 'users/profile.html'
+    title = 'Профиль'
 
-    return render(request, 'users/profile.html', context)
+    def get_success_url(self):
+        return reverse_lazy('users:profile', args=(self.object.id,))
 
-
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('home'))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) 
+        context["busket"] = Busket.objects.filter(user=self.object)
+        return context

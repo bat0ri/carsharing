@@ -25,6 +25,14 @@ class Transport(models.Model):
         return f"Транспорт: {self.name} ||--|| Тип: {self.category.name}"
 
 
+class BasketQuerySet(models.QuerySet):
+    def total_sum(self):
+        return sum(basket.sum() for basket in self)
+
+    def total_quantity(self):
+        return sum(basket.quantity for basket in self)
+
+
 
 class Busket(models.Model):
 
@@ -33,7 +41,7 @@ class Busket(models.Model):
     minutes = models.PositiveSmallIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True)
 
-    
+    objects = BasketQuerySet.as_manager()
 
     class Meta:
         verbose_name = ("Busket")
@@ -44,3 +52,6 @@ class Busket(models.Model):
 
     def get_absolute_url(self):
         return reverse("Busket_detail", kwargs={"pk": self.pk})
+
+    def sum(self):
+        return self.transport.price * self.minutes

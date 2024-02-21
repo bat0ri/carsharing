@@ -7,8 +7,11 @@
     
     <!------------------------   список категорий   -------------------------->
     <div class="flex items-center  w-1/4 m-4 hidden sm:flex sm:items-center">
+        <a href='{% url 'catalog:index' %}' class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Все
+        </a>
         {% for category in categories %}
-            <a class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <a href='{% url 'catalog:category' category.id %}' class="inline-flex items-center m-2 px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 {{ category.name }}
             </a>
         {% endfor %}
@@ -22,7 +25,7 @@
 
     <div class="w-full justify-items-center">
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-5">
-            {% for car in transports %}
+            {% for car in object_list %}
             <li class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img class="h-48 w-full object-cover " src="{{ car.image.url }}">
                 <div class="p-4">
@@ -31,7 +34,7 @@
                     <p class="text-gray-700 text-base">{{ car.is_ready }}</p>
                     <div class="flex items-center justify-between mt-4">
                         <p class="font-bold text-xl">{{ car.price }} ₽/час</p>
-                        <a href="" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Бронь</a>
+                        <a href="{% url 'catalog:busket_add' car.id %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Бронь</a>
                     </div>
                 </div>
             </li>

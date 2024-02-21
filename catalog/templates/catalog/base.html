@@ -36,7 +36,7 @@
                       </svg>
                     </a>
               </div>
-              <h1 class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> {{ user }}</h1>
+              <a href='{% url "users:profile" user.id %}' class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4"> {{ user }}</a>
               <a href="{%  url 'users:logout' %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Выйти</a>
           {% else %}
               <a href="{% url 'users:login'  %}" class="text-gray-800 text-sm font-semibold hover:text-purple-600 mr-4">Sign in</a>
