@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'users',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'Cars.urls'
@@ -77,14 +79,38 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Cars.wsgi.application'
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+    'localhost'
+]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'cars',
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '5429',
     }
 }
 
@@ -162,3 +188,9 @@ EMAIL_HOST_USER = 'n.sultanoff.2002s@gmail.com'
 EMAIL_HOST_PASSWORD = 'gifv soya wwhx vswe'
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = 'n.sultanoff.2002s@gmail.com'
+
+
+# Celery
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
