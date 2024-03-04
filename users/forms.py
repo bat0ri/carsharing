@@ -1,7 +1,11 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import UserChangeForm
 from django import forms
 
-from users.models import User
+from users.models import User, EmailVerification
+import uuid
+from datetime import timedelta
+from django.utils.timezone import now
 
 
 class LoginForm(AuthenticationForm):
@@ -25,30 +29,34 @@ class LoginForm(AuthenticationForm):
 class RegisterForm(UserCreationForm):
 
     first_name = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b border-gray-600 focus:outline-none focus:border-blue-500',
+        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 \
+        border-b border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'Введите логин'
     }),)
 
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b border-gray-600 focus:outline-none focus:border-blue-500',
+        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 \
+            border-b border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'Введите логин'
     }),)
 
     email = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b border-gray-600 focus:outline-none focus:border-blue-500',
+        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 \
+            border-b border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'Введите почту'
     }),)
 
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b border-gray-600 focus:outline-none focus:border-blue-500',
+        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 \
+            border-b border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'Пароль'
     }),)
 
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b border-gray-600 focus:outline-none focus:border-blue-500',
+        'class': 'w-full p-2 mb-4 bg-gray-200 text-white dark:bg-gray-800 border-b \
+            border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'повторите Пароль'
     }),)
-
 
     class Meta:
         model = User
@@ -57,6 +65,13 @@ class RegisterForm(UserCreationForm):
     def clean_email(self):
         # Отключаем валидацию email
         return self.cleaned_data['email']
+
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=True)
+        exp = now() + timedelta(hours=48)
+        record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=exp)
+        record.send_verification_email()
+        return user
 
 
 class UserProfileForm(UserChangeForm):
@@ -82,7 +97,6 @@ class UserProfileForm(UserChangeForm):
         'class': 'w-full p-2 mb-4 bg-gray-200 text-black  border-b border-gray-600 focus:outline-none focus:border-blue-500',
         'placeholder': 'Фотка',
     }))
-
 
     class Meta:
         model = User
