@@ -28,6 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+DOMAIN_NAME = 'http://127.0.0.1:8000'
+
+
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login"
 
@@ -146,3 +149,16 @@ SESSION_SAVE_EVERY_REQUEST = True  # Сохранять сессию после 
 AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/users/login/'
+
+# Send email
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+# gifv soya wwhx vswe
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'n.sultanoff.2002s@gmail.com'
+EMAIL_HOST_PASSWORD = 'gifv soya wwhx vswe'
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = 'n.sultanoff.2002s@gmail.com'
