@@ -13,9 +13,9 @@ urlpatterns = [
     path('', IndexView.as_view(), name='home'),
     path('catalog/', include('catalog.urls', namespace='catalog')),
     path('users/', include('users.urls', namespace='users')),
-
-
 ]
 
 if settings.DEBUG:
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
+    
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

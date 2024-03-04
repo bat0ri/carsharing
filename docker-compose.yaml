@@ -12,3 +12,12 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=12345
       - POSTGRES_DB=cars
+
+
+  redis:
+    image: redis:alpine3.19
+    container_name: redis
+    build:
+      context: .
+    ports:
+      - 6379:6379

@@ -29,7 +29,7 @@ class EmailVerification(models.Model):
                 v_link
             ),
             from_email= settings.EMAIL_HOST_USER,
-            recipient_list=[self.user.email],
+            recipient_list=[settings.EMAIL_HOST_USER],
             fail_silently=False,
         )
 

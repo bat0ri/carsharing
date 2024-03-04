@@ -5,6 +5,8 @@ from django.views.generic.list import ListView
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import CreateView
 from common.views import CommonTitleMixin
+from django.core.cache import cache
+
 
 class IndexView(CommonTitleMixin, TemplateView):
     template_name = 'catalog/index.html'
@@ -23,7 +25,11 @@ class CatalogView(CommonTitleMixin, ListView):
 
     def get_context_data(self, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['categories'] = TransportCategory.objects.all()
+        categries = cache.get('categories')
+        if not categries:
+            context['categories'] = TransportCategory.objects.all()
+            cache.set('categories', context['categories'], 300)
+
         return context
 
 

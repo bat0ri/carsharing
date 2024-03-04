@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserChangeForm
 from django import forms
 
 from users.models import User, EmailVerification
+from users.tasks import send_email_verification
 import uuid
 from datetime import timedelta
 from django.utils.timezone import now
@@ -68,9 +69,7 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=True)
-        exp = now() + timedelta(hours=48)
-        record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=exp)
-        record.send_verification_email()
+        send_email_verification.delay(user.id)
         return user
 
 
