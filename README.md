@@ -50,7 +50,11 @@ docker-compose up -d
 ```bash
 python manage.py migrate
 ```
-
+#### 2.1 Применение фикстур
+```bash
+./manage.py loaddata catalog/fixtures/category.json \
+./manage.py loaddata catalog/fixtures/cars.json 
+```
 
 ### 3. Создание административного аккаунта
 
@@ -75,11 +79,6 @@ python manage.py runserver
 1. Перейдите по адресу [http://localhost:8000/admin/](http://localhost:8000/admin/).
 2. Войдите, используя созданный вами аккаунт администратора.
 
-## Применение фикстур
-```bash
-./manage.py loaddata catalog/fixtures/category.json \
-./manage.py loaddata catalog/fixtures/cars.json 
-```
 ## Референсы
 + [Initial Server Setup with Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04)
 + [Redis cache backend for Django](https://github.com/jazzband/django-redis)
