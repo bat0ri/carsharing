@@ -80,3 +80,8 @@ python manage.py runserver
 ./manage.py loaddata catalog/fixtures/category.json \
 ./manage.py loaddata catalog/fixtures/cars.json 
 ```
+## Референсы
++ [Initial Server Setup with Ubuntu 22.04](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-22-04)
++ [Redis cache backend for Django](https://github.com/jazzband/django-redis)
++ [environ docs](https://django-environ.readthedocs.io/en/latest/quickstart.html)
++ [celery docs](https://docs.celeryq.dev/en/stable/django/first-steps-with-django.html)
